@@ -6,29 +6,68 @@
 
 MySQL HeatWave includes MySQL HeatWave Lakehouse, letting users query hundreds of terabytes of data in object storage—in a variety of file formats, such as CSV, Parquet, and Aurora/Redshift export files from other databases. Customers can query transactional data in MySQL databases, data in various formats in object storage, or a combination of both using standard MySQL commands. Querying data in object storage is as fast as querying data inside the database.
 
-To load data from Object Storage to HeatWave, you need to specify the location of the file or folder objects in your Object Storage.
-
-1. Use [Resource Principal](https://docs.oracle.com/en-us/iaas/autonomous-database-serverless/doc/resource-principal-enable.html) - It is recommended that you use Resource Principal-based approach for access to data in Object Storage for more sensitive data as this approach is more secure.
-
-2. Use [Pre-Authenticated Request URLs (PARs)](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/usingpreauthenticatedrequests.htm) - If you choose to use PARs, we recommend that you use read-only PARs with Lakehouse and specify short expiration dates for your PARs. The expiration dates should align with your loading schedule. 
-
-Since we are using a sample data set, we will make use of PAR in this LiveLab. We already have several tables available in HeatWave that have been loaded from MySQL.
-
-We will now load the DELIVERY_ORDERS table from the Object Store. This is a large table with 30 million rows and contains information about the delivery vendor for orders.
-
 ### Objectives
 
-- Create PAR Link for the  "delivery_order" files
+In this lab, you will be guided through the following tasks:
+
+- Create Object Storage bucket
+- Upload survey data
+- Create PAR Link for the  survey file
 - Run Autoload to infer the schema and estimate capacity
-- Load complete DELIVERY table from Object Store into MySQL HeatWave
+- Load survey table from Object Store into MySQL HeatWave cluster
 
 ### Prerequisites
 
 - An Oracle Trial or Paid Cloud Account
 - Some Experience with MySQL Shell
-- Completed Lab 5
+- Completed Lab 4
 
-## Task 1: Create the PAR Link for the "delivery_order" files
+## Task 1: Download survey file to your local machine
+
+1. From Windows Local machine click  this  link from your browser:
+
+    [https://objectstorage.us-ashburn-1.oraclecloud.com/p/JZjT3fuhsUXWBdOPVvLnP0Mx1ApX9Jj5z5iSxge4uS_lBjRqHv2md6IuRu2MUJUp/n/mysqlpm/b/mysql_airport/o/passenger_survey.csv](https://objectstorage.us-ashburn-1.oraclecloud.com/p/JZjT3fuhsUXWBdOPVvLnP0Mx1ApX9Jj5z5iSxge4uS_lBjRqHv2md6IuRu2MUJUp/n/mysqlpm/b/mysql_airport/o/passenger_survey.csv) 
+
+2. From Linux or Mac Enter from terminal
+
+    ```bash
+    <copy>https://objectstorage.us-ashburn-1.oraclecloud.com/p/JZjT3fuhsUXWBdOPVvLnP0Mx1ApX9Jj5z5iSxge4uS_lBjRqHv2md6IuRu2MUJUp/n/mysqlpm/b/mysql_airport/o/passenger_survey.csv</copy>
+    ```
+
+## Task 2: Create Object Storage bucket
+
+1. Sign in to OCI using your tenant name, user name and password.
+2. Once signed in select the **root** compartment
+3. From the Console navigation menu, click **Storage**.
+4. Under Object Storage, click Buckets
+
+    **NOTE:** Ensure the correct Compartment is selected : Select **root**
+
+    ![cloud storage bucket](./images/cloud-storage-bucket.png "cloud-storage-bucket")
+
+5. Click Create Bucket. The Create Bucket pane is displayed.
+6. Enter a Bucket Name **airport-survey**
+7. Under Default Storage Tier, click Standard. Leave all the other fields at their default values.
+8. Click Create
+
+    ![press bucket button](./images/press-bucket-button.png "press-bucket-button")
+
+## Task 3: Upload airportdb data
+
+1. In the Buckets page, click the **airport-survey** name to load images into. The bucket's details page is displayed.
+2. Under Resources, click Objects to display the list of objects in the bucket.
+3. Click Upload. The Upload Objects pane is displayed.
+4. Select the files from the unzippe airport-db local folder
+    - Click open to load the passenger_survey.csv file
+    - Click the Upload button
+       ![bucket detail](./images/bucket-detail.png"bucket-detail.png")
+
+    - Wait for the **Abort** to change into **close**
+       ![upload in process](./images/upload.png"upload")
+
+    - Click the **close** button
+
+## Task 4: Create the PAR Link for the "delivery_order" files
 
 1. To create a PAR URL
     - Go to menu **Storage —> Buckets**
@@ -52,7 +91,7 @@ We will now load the DELIVERY_ORDERS table from the Object Store. This is a larg
 
 9. Save the generated PAR URL; you will need it in the next task
 
-## Task 2: Connect to your MySQL HeatWave system using Cloud Shell
+## Task 5: Connect to your MySQL HeatWave system using Cloud Shell
 
 1. If not already connected then connect to MySQL using the MySQL Shell client tool with the following command:
 
@@ -88,7 +127,7 @@ We will now load the DELIVERY_ORDERS table from the Object Store. This is a larg
 
     You are now ready to use Autoload to load a table from the object store into MySQL HeatWave
 
-## Task 3: Run Autoload to infer the schema and estimate capacity required for the DELIVERY table in the Object Store
+## Task 6: Run Autoload to infer the schema and estimate capacity required for the DELIVERY table in the Object Store
 
 1. Part of the DELIVERY information for orders is contained in the delivery-orders-1.csv file in object store for which we have created a PAR URL in the earlier task. In a later task, we will load the other files for the DELIVER_ORDERS table into MySQL HeatWave. Enter the following commands one by one and hit Enter.
 
@@ -231,72 +270,6 @@ We will now load the DELIVERY_ORDERS table from the Object Store. This is a larg
     ![Add data to table](./images/load-delivery-table.png "load delivery table")
 
 7. Your DELIVERY table is now ready to be used in queries with other tables. In the next lab, we will see how to load additional data for the DELIVERY table from the Object Store using different options.
-
-## Task 5:  Load all data for DELIVERY table from Object Store
-
-The DELIVERY table contains data loaded from one file so far. If new data arrives as more files, we can load those files too. The first option is by specifying a list of the files in the table definition. The second option is by specifying a prefix and have all files with that prefix be source files for the DELIVERY table. The third option is by specifying the entire folder in the Object Store to be the source file for the DELIVERY table.
-
-We will use the second option which Loads the data by specifying a PAR URL for all objects with a prefix.
-
-1. First unload the DELIVERY table from HeatWave:
-
-    ```bash
-    <copy>ALTER TABLE delivery_orders SECONDARY_UNLOAD;</copy>
-    ```
-
-2. Create a PAR URL for all objects with a prefix
-
-    - a. From your OCI console, navigate to your lakehouse-files bucket in OCI.
-    - b. Select the folder —> order and click the three vertical dots.
-
-        ![Select  folder](./images/storage-delivery-orders-folder.png "storage delivery order folder")
-
-    - c. Click on ‘Create Pre-Authenticated Request’
-    - d. Click to select the ‘Objects with prefix’ option under ‘PreAuthentcated Request Target’.
-    - e. Leave the ‘Access Type’ option as-is: ‘Permit object reads on those with the specified prefix’.
-    - g. Click to select the ‘Enable Object Listing’ checkbox.
-    - h. Click the ‘Create Pre-Authenticated Request’ button.
-
-       ![Create Folder PAR](./images/storage-delivery-orders-folder-page.png "storage delivery order folder page")
-
-    - i. Click the ‘Copy’ icon to copy the PAR URL.
-    - j. Save the generated PAR URL; you will need it later.
-    - k. You can test the URL out by pasting it in your browser. It should return output like this:
-
-        ![List folder file](./images/storage-delivery-orders-folder-list.png "storage delivery order folder list")
-
-3. Since we have already created the table, we will not run Autopilot again. Instead we will simply go ahead and change the table definition to point it to this new PAR URL as the table source.
-
-4. Copy this command and replace the **(PAR URL)** with the one you saved earlier. It will be the source for the DELIVERY table:
-
-    ```bash
-    <copy>ALTER TABLE `mysql_customer_orders`.`delivery_orders` ENGINE_ATTRIBUTE='{"file": [{"par": "(PAR URL)"}], "dialect": {"format": "csv", "field_delimiter": "\\t", "record_delimiter": "\\n"}}'; </copy>
-    ```
-
-5. Your command  should look like the following example. Now Execute your modified command
-
-    *ALTER TABLE `mysql_customer_orders`.`delivery_orders` ENGINE_ATTRIBUTE='{"file": [{"par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/4EayDq3tv-D08oTTPja-2XEYZSQ0v5cG87CFNc31wT724QB5R21C1UXbK0_snbZA/n/mysqlpm/b/lakehousefiles/o/"}], "dialect": {"format": "csv", "field_delimiter": "\\t", "record_delimiter": "\\n"}}';*
-
-    **Output**
-
-    ![Add data to Table](./images/load-all-delivery-table.png "load all delivery table")
-
-6. Load data into the DELIVERY table:
-
-    ```bash
-    <copy>alter table delivery_orders secondary_load;</copy>
-    ```
-
-7. View the number of rows in the DELIVERY table:
-
-    ```bash
-    <copy>select count(*) from delivery_orders;</copy>
-    ```
-
-    The DELIVERY table now has 34 million rows.
-8. Output of steps 6 and 7
-
-![Add data to tabel](./images/load-final-delivery-table.png "load final delivery table")
 
 You may now **proceed to the next lab**
 

@@ -24,7 +24,7 @@ In this lab, you will be guided through the following tasks:
 
 - An Oracle Free Tier or Paid Cloud Account
 - A web browser
-- Login to OCI to and on OCI Dashboard (
+- Login to OCI to and on OCI Dashboard 
 
 ## Task 1: Download and unzip airportdb data to your local machine
 
