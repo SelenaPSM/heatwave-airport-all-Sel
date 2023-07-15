@@ -1,5 +1,5 @@
 {
-    "workshoptitle": "Heatwave Airport for Partners",
+    "workshoptitle": "Heatwave Airport for Partners - Advanced",
       "help": "livelabs-help-oci_us@oracle.com",
       "tutorials": [
           {
@@ -35,7 +35,7 @@
 
           {
             "title": "Lab 5: Do HeatWave Lakehouse",
-            "filename": "../../load-csv-data/load-csv-data.md"  
+            "filename": "../../do-lakehouse/do-lakehouse.md"  
           },
   
           {
