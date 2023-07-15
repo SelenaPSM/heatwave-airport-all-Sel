@@ -1,5 +1,7 @@
 # Develop MySQL HeatWave Apps with Oracle APEX
 
+![mysql heatwave](./images/mysql-heatwave-logo.jpg "mysql heatwave")
+
 ## Introduction
 
 The Oracle Database Development Tools team launched the Database Tools service in OCI providing instance web browser to create connections to the MySQL Database Service in OCI. 

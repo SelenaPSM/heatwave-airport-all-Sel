@@ -54,7 +54,7 @@
           },
 
           {
-            "title": "Lab 9: Load CSV data from OCI Object Store",
+            "title": "Lab 9: Do HeatWave Lakehouse",
             "filename": "../../load-csv-data/load-csv-data.md"  
           },
   

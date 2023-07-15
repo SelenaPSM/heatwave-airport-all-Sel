@@ -1,6 +1,10 @@
-# Load CSV data from OCI Object Store
+# Do HeatWave Lakehouse
+
+![mysql heatwave](./images/mysql-heatwave-logo.jpg "mysql heatwave")
 
 ## Introduction
+
+MySQL HeatWave includes MySQL HeatWave Lakehouse, letting users query hundreds of terabytes of data in object storage—in a variety of file formats, such as CSV, Parquet, and Aurora/Redshift export files from other databases. Customers can query transactional data in MySQL databases, data in various formats in object storage, or a combination of both using standard MySQL commands. Querying data in object storage is as fast as querying data inside the database.
 
 To load data from Object Storage to HeatWave, you need to specify the location of the file or folder objects in your Object Storage.
 

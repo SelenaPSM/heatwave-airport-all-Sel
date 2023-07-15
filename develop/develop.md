@@ -1,5 +1,7 @@
 # Build a LAMP application with MySQL HeatWave  
 
+![mysql heatwave](./images/mysql-heatwave-logo.jpg "mysql heatwave")
+
 ## Introduction
 
 MySQL HeatWave can easily be used for development tasks with existing Oracle services, such as Oracle Cloud Analytics. New applications can also be created with the LAMP or other software stacks.

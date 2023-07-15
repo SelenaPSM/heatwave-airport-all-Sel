@@ -1,5 +1,6 @@
 # Create Object Storage bucket and upload airportdb data
 
+![mysql heatwave](./images/mysql-heatwave-logo.jpg "mysql heatwave")
 
 ## Introduction
 

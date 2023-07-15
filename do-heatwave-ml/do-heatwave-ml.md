@@ -1,6 +1,10 @@
 # Build HeatWave ML with SQL
 
+![mysql heatwave](./images/mysql-heatwave-logo.jpg "mysql heatwave")
+
 ## Introduction
+
+HeatWave ML makes it easy to use machine learning, whether you are a novice user or an experienced ML practitioner. You provide the data, and HeatWave AutoML analyzes the characteristics of the data and creates an optimized machine learning model that you can use to generate predictions and explanations. An ML model makes predictions by identifying patterns in your data and applying those patterns to unseen data. HeatWave ML explanations help you understand how predictions are made, such as which features of a dataset contribute most to a prediction.
 
 To load the Aiport Delay data components, perform the following steps to create and load the required schema and tables. The requirements for Python 3 are already loaded in the compute instance and you have already installed MySQL Shell in the previous Lab.
 
