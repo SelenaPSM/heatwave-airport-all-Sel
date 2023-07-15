@@ -32,34 +32,19 @@
               "title": "Lab 4: Run Queries in HeatWave and MySQL ",
               "filename": "../../run-queries/run-queries.md"
           },
-        
-          {
-            "title": "Lab 5: Develop MySQL HeatWave Apps with Oracle APEX",
-            "filename": "../../apex-heatwave/apex-heatwave.md"
-          }, 
-        
-          {
-            "title": "Lab 6: Build a LAMP application with MySQL HeatWave",
-            "filename": "../../create-lamp/create-lamp.md"
-          },
 
           {
-            "title": "Lab 7: Use Object Storage Bucket",
-            "filename": "../../store-data/store-data.md"
-          },
-
-          {
-            "title": "Lab 8: Do HeatWave Lakehouse",
+            "title": "Lab 5: Do HeatWave Lakehouse",
             "filename": "../../load-csv-data/load-csv-data.md"  
           },
   
           {
-            "title": "Lab 9: Do HeatWave Machine Learning",
+            "title": "Lab 6: Do HeatWave Machine Learning",
             "filename": "../../do-heatwave-ml/do-heatwave-ml.md"
           }, 
   
           {
-            "title": "Lab 10: Develop HeatWave Machine Learning LAMP APP",
+            "title": "Lab 7: Develop HeatWave Machine Learning LAMP APP",
             "filename": "../../develop-ml/develop-ml.md"
           },  
 
