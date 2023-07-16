@@ -67,14 +67,14 @@ In this lab, you will be guided through the following tasks:
 
     - Click the **close** button
 
-## Task 4: Create the PAR Link for the "delivery_order" files
+## Task 4: Create the PAR Link for the "airport-survey" files
 
 1. To create a PAR URL
     - Go to menu **Storage —> Buckets**
      ![Bucket menu](./images/storage-bucket-menu.png "storage bucket menu")
 
-    - Select **lakehouse-files —> order**  folder.
-2. Select the first file —> **delivery-orders-1.csv** and click the three vertical dots.
+    - Select **airport-survey**  folder.
+2. Select the first file —> **passenger_survey.csv** and click the three vertical dots.
 3. Click on **Create Pre-Authenticated Request**
 
     ![delivery-orders-1.csv 3 dots](./images/storage-create-par-orders.png "storage create par orders")
@@ -91,9 +91,13 @@ In this lab, you will be guided through the following tasks:
 
 9. Save the generated PAR URL; you will need it in the next task
 
-## Task 5: Connect to your MySQL HeatWave system using Cloud Shell
+## Task 5: Setup MySQL HeatWave system for Lakehouse processing
 
-1. If not already connected then connect to MySQL using the MySQL Shell client tool with the following command:
+1. If not already enabled then enable HeatWave Lakehouse
+
+    **Add Image***
+
+2. If not already connected then connect to MySQL using the MySQL Shell client tool with the following command:
 
     ```bash
     <copy>mysqlsh -uadmin -p -h 10.0.1... --sql </copy>
@@ -101,23 +105,33 @@ In this lab, you will be guided through the following tasks:
 
     ![MySQL Shell Connect](./images/mysql-shell-login.png " mysql shell login")
 
-2. List schemas in your heatwave instance
+3. If airportdb tables not loaded in HeatWave Cluster then run the following Auto Parallel Load command to load the airportdb tables into HeatWave..
+
+     ```bash
+    <copy>CALL sys.heatwave_load(JSON_ARRAY('airportdb'), NULL);</copy>
+    ```
+
+    **Replace Image**
+
+    ![mysql heatwave load](./images/mysql-heatwave-load.png "mysql heatwave load ")
+
+4. List schemas in your heatwave instance
 
     ```bash
-        <copy>show databases;</copy>
+    <copy>show databases;</copy>
     ```
 
     ![Databse Schemas](./images/list-schemas-after.png "list schemas after")
 
-3. Change to the mysql\_customer\_orders database
+5. Change to the airportdb database
 
     Enter the following command at the prompt
 
     ```bash
-    <copy>USE mysql_customer_orders;</copy>
+    <copy>USE airportdb;</copy>
     ```
 
-4. To see a list of the tables available in the mysql\_customer\_orders schema
+6. To see a list of the tables available in the airportdb schema
 
     Enter the following command at the prompt
 
@@ -129,45 +143,45 @@ In this lab, you will be guided through the following tasks:
 
 ## Task 6: Run Autoload to infer the schema and estimate capacity required for the DELIVERY table in the Object Store
 
-1. Part of the DELIVERY information for orders is contained in the delivery-orders-1.csv file in object store for which we have created a PAR URL in the earlier task. In a later task, we will load the other files for the DELIVER_ORDERS table into MySQL HeatWave. Enter the following commands one by one and hit Enter.
+1. The survey information is in the passenger_survey.csv file in object store for which we have created a PAR URL in the earlier task. We will load the file for the passenger_survey table into MySQL HeatWave. Enter the following commands one by one and hit Enter.
 
 2. This sets the schema we will load table data into. Don’t worry if this schema has not been created. Autopilot will generate the commands for you to create this schema if it doesn’t exist.
 
     ```bash
-    <copy>SET @db_list = '["mysql_customer_orders"]';</copy>
+    <copy>SET @db_list = '["airportdb"]';</copy>
     ```
 
 3. This sets the parameters for the table name we want to load data into and other information about the source file in the object store. Substitute the **(PAR URL)** below with the one you generated in the previous task:
 
     ```bash
     <copy>SET @dl_tables = '[{
-    "db_name": "mysql_customer_orders",
-    "tables": [{
-        "table_name": "delivery_orders",
-        "dialect": 
-           {
-           "format": "csv",
-           "field_delimiter": "\\t",
-           "record_delimiter": "\\n"
-           },
-        "file": [{"par": "(PAR URL)"}]
-    }] }]';</copy>
+        "db_name": "airportdb",
+        "tables": [{
+            "table_name": "passenger_survey",
+            "dialect": 
+        {
+	    "skip_rows": 1,
+        "format": "csv",
+        "field_delimiter": ",",
+        "record_delimiter": "\\n"
+        },
+        "file": [{"par": "(PAR URL)"}]}]  }]'';</copy>
     ```
 
     - It should look like the following example (Be sure to include the PAR Link inside at of quotes("")):
 
         *SET @dl_tables = '[{
-        "db_name": "mysql_customer_orders",
-        "tables": [{
-            "table_name": "delivery_orders",
-            "dialect":
-            {
-            "format": "csv",
-            "field_delimiter": "\\t",
-            "record_delimiter": "\\n"
-            },
-            "file": [{"par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/MAGNmpjq3Ej4wX6LN6KaE3R9AM2_h_fQDhfM5C9SbKXO_Zbe4MdrTvypV5XsyHkS/n/mysqlpm/b/lakehousefiles/o/delivery-orders-1.csv"}]
-        }] }]';*
+	"db_name": "airportdb",
+	"tables": [{
+    	"table_name": "passenger_survey",
+    	"dialect": 
+       	{
+	"skip_rows": 1,
+       	"format": "csv",
+       	"field_delimiter": ",",
+      	 "record_delimiter": "\\n"
+       	},
+    	"file": [{"par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/so0lv7a9-PKSHLDbUr2k9Dc-pX_HPjJM6GKG_LSqty7rQFcQVT5bKp1UZ9hRuIH-/n/idqfeduyocec/b/airport-survey/o/passenger_survey.csv"}]}]  }]';*
 
 4. This command populates all the options needed by Autoload:
 
@@ -197,79 +211,80 @@ In this lab, you will be guided through the following tasks:
 
 8. The execution result conatins the SQL statements needed to create the table and then load this table data from the Object Store into HeatWave.
 
-    ![Create Table](./images/create-delivery-order.png "create delivery order")
+    ![Create Table](./images/create-delivery-order.png "create passenger survey")
 
 9. Copy the **CREATE TABLE** command from the results. It should look like the following example
 
-    *CREATE TABLE `mysql_customer_orders`.`delivery_orders`( `col_1` int unsigned NOT NULL, `col_2` bigint unsigned NOT NULL, `col_3` tinyint unsigned NOT NULL, `col_4` varchar(9) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `col_5` tinyint unsigned NOT NULL, `col_6` tinyint unsigned NOT NULL, `col_7` tinyint unsigned NOT NULL) ENGINE=lakehouse SECONDARY_ENGINE=RAPID ENGINE_ATTRIBUTE='{"file": [{"par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/MAGNmpjq3Ej4wX6LN6KaE3R9AM2_h_fQDhfM5C9SbKXO_Zbe4MdrTvypV5XsyHkS/n/mysqlpm/b/lakehousefiles/o/delivery-orders-1.csv"}], "dialect": {"format": "csv", "field_delimiter": "\\t", "record_delimiter": "\\n"}}';*
+    *CREATE TABLE `airportdb`.`passenger_survey`( `col_1` mediumint unsigned NOT NULL, `col_2` varchar(10) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `col_3` varchar(8) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `col_4` smallint unsigned NOT NULL, `col_5` tinyint unsigned NOT NULL, `col_6` varchar(24) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN') ENGINE=lakehouse SECONDARY_ENGINE=RAPID ENGINE_ATTRIBUTE='{"file": [{"par": "(PAR URL)"}], "dialect": {"format": "csv", "skip_rows": 1, "field_delimiter": ",", "record_delimiter": "\\n"}}';*
 
 10. Modify the **CREATE TABLE** command to replace the generic column names, such as **col\_1**, with descriptive column names. Use the following values:
 
-    - `col_1 : orders_delivery`
-    - `col_2 : order_id`
-    - `col_3 : customer_id`
-    - `col_4 : order_status`
-    - `col_5 : store_id`
-    - `col_6 : delivery_vendor_id`
-    - `col_7 : estimated_time_hours`
+    - `col_1 : id`
+    - `col_2 : customer_type`
+    - `col_3 : travel_type`
+    - `col_4 : departure_delay`
+    - `col_5 : baggage_handling`
+    - `col_6 : satisfaction`
+    
+    **Important** Substitute the **(PAR URL)** value with the one you generated in the previous task
 
 11. Your modified **CREATE TABLE** command  should look like the following example:
 
-    *CREATE TABLE `mysql_customer_orders`.`delivery_orders`( `orders_delivery` int unsigned NOT NULL, `order_id` bigint unsigned NOT NULL, `customer_id` tinyint unsigned NOT NULL, `order_status` varchar(9) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `store_id` tinyint unsigned NOT NULL, `delivery_vendor_id` tinyint unsigned NOT NULL, `estimated_time_hours` tinyint unsigned NOT NULL) ENGINE=lakehouse SECONDARY_ENGINE=RAPID ENGINE_ATTRIBUTE='{"file": [{"par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/Jl8AjjtkPT8TDZZ-lK2qDj8oxVEZ2ah09fJN9Gl7XfhNBWBpzdvwOXkxx9Yz_SLi/n/iddftbilrksk/b/lakehouse-files-plf/o/order/delivery-orders-1.csv"}], "dialect": {"format": "csv", "field_delimiter": "\\t", "record_delimiter": "\\n"}}';*
+    *CREATE TABLE `airportdb`.`passenger_survey`( `id` mediumint unsigned NOT NULL, `customer_type` varchar(10) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `travel_type` varchar(8) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `departure_delay` smallint unsigned NOT NULL, `baggage_handling` tinyint unsigned NOT NULL, `sastifaction` varchar(24) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN') ENGINE=lakehouse SECONDARY_ENGINE=RAPID ENGINE_ATTRIBUTE='{"file": [{"par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/so0lv7a9-PKSHLDbUr2k9Dc-pX_HPjJM6GKG_LSqty7rQFcQVT5bKp1UZ9hRuIH-/n/idqfeduyocec/b/airport-survey/o/passenger_survey.csv"}], "dialect": {"format": "csv", "skip_rows": 1, "field_delimiter": ",","record_delimiter": "\\n"}}';*
 
-12. Execute the modified **CREATE TABLE** command to create the delivery_orders table.
+12. Execute the modified **CREATE TABLE** command to create the passenger_survey table.
 
 13. The create command and result should look lie this
 
     ![Delivery Table create](./images/create-delivery-table.png "create delivery table")
 
-## Task 4: Load complete DELIVERY table from Object Store into MySQL HeatWave
+## Task 4: Load complete passenger_survey table from Object Store into MySQL HeatWave
 
 1. Run this command to see the table structure created.
 
     ```bash
-    <copy>desc delivery_orders;</copy>
+    <copy>desc passenger_survey;</copy>
     ```
 
     ![Delivery Table structure](./images/describe-delivery-table.png "describe delivery table")
 
-2. Now load the data from the Object Store into the ORDERS table.
+2. Now load the data from the Object Store into the passenger_survey table.
 
     ```bash
-    <copy> ALTER TABLE `mysql_customer_orders`.`delivery_orders` SECONDARY_LOAD; </copy>
+    <copy> ALTER TABLE `airpotdb`.`passenger_survey` SECONDARY_LOAD; </copy>
     ```
 
 3. Once Autoload completes,point to the schema
 
     ```bash
-    <copy>use mysql_customer_orders</copy>
+    <copy>use airportdb</copy>
     ```
 
 4. Check the number of rows loaded into the table.
 
     ```bash
-    <copy>select count(*) from delivery_orders;</copy>
+    <copy>select count(*) from passenger_survey;</copy>
     ```
 
 5. View a sample of the data in the table.
 
     ```bash
-    <copy>select * from delivery_orders limit 5;</copy>
+    <copy>select * from passenger_survey limit 5;</copy>
     ```
 
-    a. Join the delivery_orders table with other table in the schema
+    a. Join the passenger_surveytable with other table in the schema
 
     ```bash
-    <copy> select o.* ,d.*  from  orders o
-    join delivery_orders d on o.order_id = d.order_id
-    where o.order_id = 93751524; </copy>
+    <copy> SELECT sastifaction,customer_type, travel_type, AVG(departure_delay) departure_delay,count(*) as nb_psgr
+    FROM airportdb.passenger_survey
+    group by customer_type,travel_type,sastifaction; </copy>
     ```
 
 6. Your output for steps 2 thru 5 should look like this:
 
     ![Add data to table](./images/load-delivery-table.png "load delivery table")
 
-7. Your DELIVERY table is now ready to be used in queries with other tables. In the next lab, we will see how to load additional data for the DELIVERY table from the Object Store using different options.
+7. Your passenger_survey table is now ready to be used in queries with other tables.
 
 You may now **proceed to the next lab**
 

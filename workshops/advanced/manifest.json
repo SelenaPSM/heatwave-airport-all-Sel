@@ -34,17 +34,16 @@
           },
 
           {
-            "title": "Lab 5: Do HeatWave Lakehouse",
-            "filename": "../../do-lakehouse/do-lakehouse.md"  
-          },
-  
-          {
-            "title": "Lab 6: Do HeatWave Machine Learning",
+            "title": "Lab 5: Do HeatWave Machine Learning",
             "filename": "../../do-heatwave-ml/do-heatwave-ml.md"
           }, 
-  
+
           {
-            "title": "Lab 7: Develop HeatWave Machine Learning LAMP APP",
+            "title": "Lab 6: Do HeatWave Lakehouse",
+            "filename": "../../do-lakehouse/do-lakehouse.md"  
+          },
+          {
+            "title": "Lab 7: Develop HeatWave LAMP APPs",
             "filename": "../../develop-ml/develop-ml.md"
           },  
 
