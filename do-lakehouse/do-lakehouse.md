@@ -238,7 +238,7 @@ In this lab, you will be guided through the following tasks:
 
     ![Delivery Table create](./images/create-delivery-table.png "create delivery table")
 
-## Task 4: Load complete passenger_survey table from Object Store into MySQL HeatWave
+## Task 7: Load complete passenger_survey table from Object Store into MySQL HeatWave
 
 1. Run this command to see the table structure created.
 
@@ -272,7 +272,7 @@ In this lab, you will be guided through the following tasks:
     <copy>select * from passenger_survey limit 5;</copy>
     ```
 
-    a. Join the passenger_surveytable with other table in the schema
+    a. Join the passenger_survey table with other table in the schema
 
     ```bash
     <copy> SELECT sastifaction,customer_type, travel_type, AVG(departure_delay) departure_delay,count(*) as nb_psgr
