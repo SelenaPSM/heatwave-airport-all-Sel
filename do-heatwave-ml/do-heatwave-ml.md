@@ -31,13 +31,11 @@ In this lab, you will be guided through the following task:
 
 - An Oracle Trial or Paid Cloud Account
 - Some Experience with MySQL Shell
-- Completed Lab 2
+- Completed Lab 4
 
 ## Task 1: Connect MySQL Shell:
 
-1. If not already connected with SSH, connect to Compute instance using Cloud Shell
-
-    (Example: **ssh -i ~/.ssh/id_rsa opc@132.145.17....**)
+1. If not already connected then connect to OCI Shell
 
 2. On the command line, connect to MySQL using the MySQL Shell client tool with the following command:
 
@@ -230,11 +228,12 @@ In this example, data is assigned to a @row\_input session variable, and the var
 
     To avoid consuming too much space, it is good practice to unload a model when you are finished using it.
 
+You may now **proceed to the next lab**
 
 ## Learn More
 
-* [Oracle Cloud Infrastructure MySQL Database Service Documentation ](https://docs.cloud.oracle.com/en-us/iaas/MySQL-database)
-* [MySQL HeatWave ML Documentation] (https://dev.mysql.com/doc/heatwave/en/heatwave-machine-learning.html)
+- [Oracle Cloud Infrastructure MySQL Database Service Documentation ](https://docs.cloud.oracle.com/en-us/iaas/MySQL-database)
+- [MySQL HeatWave ML Documentation] (https://dev.mysql.com/doc/heatwave/en/heatwave-machine-learning.html)
 
 ## Acknowledgements
 
