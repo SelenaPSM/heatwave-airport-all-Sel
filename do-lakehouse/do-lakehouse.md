@@ -24,7 +24,7 @@ In this lab, you will be guided through the following tasks:
 
 ## Task 1: Download survey file to your local machine
 
-1. From Windows Local machine click  this  link from your browser:
+1. From Windows Local machine click  this  link to download the sample file to your local machine
 
     [https://objectstorage.us-ashburn-1.oraclecloud.com/p/JZjT3fuhsUXWBdOPVvLnP0Mx1ApX9Jj5z5iSxge4uS_lBjRqHv2md6IuRu2MUJUp/n/mysqlpm/b/mysql_airport/o/passenger_survey.csv](https://objectstorage.us-ashburn-1.oraclecloud.com/p/JZjT3fuhsUXWBdOPVvLnP0Mx1ApX9Jj5z5iSxge4uS_lBjRqHv2md6IuRu2MUJUp/n/mysqlpm/b/mysql_airport/o/passenger_survey.csv) 
 
@@ -63,8 +63,6 @@ In this lab, you will be guided through the following tasks:
        ![bucket detail](./images/bucket-detail.png"bucket-detail.png")
 
     - Wait for the **Abort** to change into **close**
-       ![upload in process](./images/upload.png"upload")
-
     - Click the **close** button
 
 ## Task 4: Create the PAR Link for the "airport-survey" files
@@ -97,23 +95,21 @@ In this lab, you will be guided through the following tasks:
 
     **Add Image***
 
-2. If not already connected then connect to MySQL using the MySQL Shell client tool with the following command:
+2. Connect to MySQL using the MySQL Shell client tool with the following command:
 
     ```bash
     <copy>mysqlsh -uadmin -p -h 10.0.1... --sql </copy>
     ```
-
     ![MySQL Shell Connect](./images/mysql-shell-login.png " mysql shell login")
 
-3. If airportdb tables not loaded in HeatWave Cluster then run the following Auto Parallel Load command to load the airportdb tables into HeatWave..
+3. Run the following Auto Parallel Load command to load the airportdb tables into HeatWave..
 
      ```bash
     <copy>CALL sys.heatwave_load(JSON_ARRAY('airportdb'), NULL);</copy>
     ```
+    - If the airportdb tables are already loaded in HeatWave Cluster then you will get the following result
 
-    **Replace Image**
-
-    ![mysql heatwave load](./images/mysql-heatwave-load.png "mysql heatwave load ")
+        ![mysql heatwave load](./images/mysql-heatwave-load.png "mysql heatwave load ")
 
 4. List schemas in your heatwave instance
 
@@ -165,7 +161,7 @@ In this lab, you will be guided through the following tasks:
         "field_delimiter": ",",
         "record_delimiter": "\\n"
         },
-        "file": [{"par": "(PAR URL)"}]}]  }]'';</copy>
+        "file": [{"par": "(PAR URL)"}]}]  }]';</copy>
     ```
 
     - It should look like the following example (Be sure to include the PAR Link inside at of quotes("")):
@@ -215,7 +211,7 @@ In this lab, you will be guided through the following tasks:
 
 9. Copy the **CREATE TABLE** command from the results. It should look like the following example
 
-    *CREATE TABLE `airportdb`.`passenger_survey`( `col_1` mediumint unsigned NOT NULL, `col_2` varchar(10) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `col_3` varchar(8) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `col_4` smallint unsigned NOT NULL, `col_5` tinyint unsigned NOT NULL, `col_6` varchar(24) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN') ENGINE=lakehouse SECONDARY_ENGINE=RAPID ENGINE_ATTRIBUTE='{"file": [{"par": "(PAR URL)"}], "dialect": {"format": "csv", "skip_rows": 1, "field_delimiter": ",", "record_delimiter": "\\n"}}';*
+    *CREATE TABLE `airportdb`.`passenger_survey`( `col_1` mediumint unsigned NOT NULL, `col_2` varchar(10) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `col_3` varchar(8) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `col_4` smallint unsigned NOT NULL, `col_5` tinyint unsigned NOT NULL, `col_6` varchar(24) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN') ENGINE=lakehouse SECONDARY_ENGINE=RAPID ENGINE_ATTRIBUTE='{"file": [{"par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/gZvtUPPvW5vGWWCFSGle92jX3UOfuuh1fgztu-lK1r1ogYRzGswEJgOzoy-HeVae/n/idqfeduyocec/b/airport-survey/o/passenger_survey.csv"}], "dialect": {"format": "csv", "skip_rows": 1, "field_delimiter": ",", "record_delimiter": "\\n"}}';*
 
 10. Modify the **CREATE TABLE** command to replace the generic column names, such as **col\_1**, with descriptive column names. Use the following values:
 
@@ -228,9 +224,9 @@ In this lab, you will be guided through the following tasks:
     
     **Important** Substitute the **(PAR URL)** value with the one you generated in the previous task
 
-11. Your modified **CREATE TABLE** command  should look like the following example:
+11. Your modified **CREATE TABLE** command  should look similar to  the following example PAR value is not your valid PAR:
 
-    *CREATE TABLE `airportdb`.`passenger_survey`( `id` mediumint unsigned NOT NULL, `customer_type` varchar(10) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `travel_type` varchar(8) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `departure_delay` smallint unsigned NOT NULL, `baggage_handling` tinyint unsigned NOT NULL, `sastifaction` varchar(24) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN') ENGINE=lakehouse SECONDARY_ENGINE=RAPID ENGINE_ATTRIBUTE='{"file": [{"par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/so0lv7a9-PKSHLDbUr2k9Dc-pX_HPjJM6GKG_LSqty7rQFcQVT5bKp1UZ9hRuIH-/n/idqfeduyocec/b/airport-survey/o/passenger_survey.csv"}], "dialect": {"format": "csv", "skip_rows": 1, "field_delimiter": ",","record_delimiter": "\\n"}}';*
+    *CREATE TABLE `airportdb`.`passenger_survey`( `id` mediumint unsigned NOT NULL, `customer_type` varchar(10) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `travel_type` varchar(8) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN', `departure_delay` smallint unsigned NOT NULL, `baggage_handling` tinyint unsigned NOT NULL, `sastifaction` varchar(24) NOT NULL COMMENT 'RAPID_COLUMN=ENCODING=VARLEN') ENGINE=lakehouse SECONDARY_ENGINE=RAPID ENGINE_ATTRIBUTE='{"file": [{"par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/gZvtUPPvW5vGWWCFSGle92jX3UOfuuh1fgztu-lK1r1ogYRzGswEJgOzoy-HeVae/n/idqfeduyocec/b/airport-survey/o/passenger_survey.csv"}], "dialect": {"format": "csv", "skip_rows": 1, "field_delimiter": ",","record_delimiter": "\\n"}}';*
 
 12. Execute the modified **CREATE TABLE** command to create the passenger_survey table.
 
@@ -251,7 +247,7 @@ In this lab, you will be guided through the following tasks:
 2. Now load the data from the Object Store into the passenger_survey table.
 
     ```bash
-    <copy> ALTER TABLE `airpotdb`.`passenger_survey` SECONDARY_LOAD; </copy>
+    <copy> ALTER TABLE `airportdb`.`passenger_survey` SECONDARY_LOAD; </copy>
     ```
 
 3. Once Autoload completes,point to the schema
