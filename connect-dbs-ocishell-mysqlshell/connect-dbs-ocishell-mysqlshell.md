@@ -61,35 +61,15 @@ In this lab, you will be guided through the following tasks:
 
 ## Task 3: Install airportdb sample data
 
-The installation procedure involves downloading the airportdb database to cloud shell and importing the data from cloud shell into the MySQL DB System using the MySQL Shell Dump Loading utility. For information about this utility, see Dump Loading Utility: [https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-utilities-load-dump.htmly](https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-utilities-load-dump.html)
+ To install the airportdb database:  **Connect to MySQL Database Service**
 
- To install the airportdb database:
-
-1. Download the airportdb sample database and unpack it. The airportdb sample database is provided for download as a compressed tar or Zip archive. The download is approximately 640 MBs in size.
-
-
-
-    a. Get sample file
-
-    ```bash
-    <copy>wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/MdFkX2s2_x9Miktl08UoorNTIyE-bIULjDXcbYuU1ukSfw1g48AEUkmH0-UcN5bQ/n/idazzjlcjqzj/b/irportdb-bucket-20230123-2124/o/airportdb_ysqlsh_331.zip</copy>
-    ```
-  
-    b. Unzip sample file
-
-    ```bash
-    <copy>unzip airportdb_ysqlsh_331.zip</copy>
-    ```
-
-   **Connect to MySQL Database Service**
-
-2. From your cloud shell, connect to HEATWAVE-DB  using the MySQL Shell client tool.
+1. From your cloud shell, connect to HEATWAVE-DB  using the MySQL Shell client tool.
 
    The endpoint (IP Address) can be found in your notepad or  the HEATWAVE-DB  System Details page, under the "Endpoint" "Private IP Address". 
 
     ![mysql endpoint private ip](./images/mysql-endpoint-private-ip.png "mysql endpoint private ip")
 
-3. Use the following command to connect to MySQL using the MySQL Shell client tool. Be sure to add the MDS-HW private IP address at the end of the command. Also enter the admin user and the db password created on Lab 1
+2. Use the following command to connect to MySQL using the MySQL Shell client tool. Be sure to add the MDS-HW private IP address at the end of the command. Also enter the admin user and the db password created on Lab 1
 
     (Example  **mysqlsh -uadmin -p -h10.0.1..**)
 
@@ -99,21 +79,21 @@ The installation procedure involves downloading the airportdb database to cloud 
     <copy>mysqlsh -uadmin -p -h 10.0.1... </copy>
     ```
 
-    ![mysql shell first connect](./images/mysql-shell-first-connect.png "mysql shell first connect ")
+    ![mysql shell first connect](./images/mysql-shell-first-connect-oci.png "mysql shell first connect ")
 
-4. Load the airportdb database into the MySQL DB System using the MySQL Shell Dump Loading Utility.
+3. Load the airportdb database into the MySQL DB System using the MySQL Shell Dump Loading Utility.
 
     ```bash
     <copy>\js</copy>
     ```
 
     ```bash
-    <copy>util.loadDump("airportdb", {threads: 16, deferTableIndexes: "all", ignoreVersion: true, loadIndexes:false})</copy>
+    <copy>util.loadDump("https://objectstorage.us-ashburn-1.oraclecloud.com/p/yXOA3Kwid4uG0oHvHMufbK3cSESmQlU6-0bVB_1vQ8VxR0ggB1m-nDYYOXXy0O5W/n/idazzjlcjqzj/b/airportdb-bucket-112312031/o/airportdb_all/", {progressFile: "progress.json", loadIndexes:false})</copy>
     ```
 
     ![mysql load data](./images/mysql-load-data.png "mysql load data ")
 
-5. View  the airportdb total records per table
+4. View  the airportdb total records per table
 
     ```bash
     <copy>\sql</copy>
@@ -125,7 +105,7 @@ The installation procedure involves downloading the airportdb database to cloud 
 
     ![airportdb total records](./images/airportdb-list.png "airportdb total records") 
 
-6. Exit MySQL Shell
+5. Exit MySQL Shell
 
       ```bash
       <copy>\q</copy>

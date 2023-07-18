@@ -37,21 +37,12 @@ In this lab, you will be guided through the following task:
 3. In the list of DB Systems, click the **HEATWAVE-DB** system. click **More Action ->  Add HeatWave Cluster**.
     ![mysql more actions add cluster](./images/mysql-more-actions-add-cluster.png " mysql more actions add cluster")
 
-4. On the “Add HeatWave Cluster” dialog, select “HeatWave.512GB” shape
-5. Click “Estimate Node Count” button
-    ![mysql cluster estimate node](./images/mysql-cluster-estimate-node.png "mysql cluster estimate node ")
+    - a. Enable the MySQL HeatWave LakeHouse checkbox
+    - b. Set Node Count to 2 for this Lab and Click Add HeatWave Cluster to create the HeatWave cluster
 
-6. On the “Estimate Node Count” page, click “Generate Estimate”. This will trigger the auto provisioning advisor to sample the data stored in MySQL InnoDB and predict the number of HeatWave nodes needed.
-    ![mysql estimate node](./images/mysql-estimate-node.png "mysql estimate node ")
+        ![mysql apply cluster](./images/mysql-apply-cluster.png " mysql apply cluster")
 
-7. Once the estimations are calculated, it shows list of database schemas in MySQL node. If you expand the schema and select different tables, you will see the estimated memory required in the Summary box, There is a Load Command (heatwave_load) generated in the text box window, which will change based on the selection of databases/tables
-8. Select the airportdb schema and click “Apply Node Count Estimate” to apply the node count
-    ![apply node](./images/mysql-apply-node.png "apply node")
-
-9. Click “Add HeatWave Cluster” to create the HeatWave cluster
-    ![mysql apply cluster](./images/mysql-apply-cluster.png " mysql apply cluster")
-
-10. HeatWave creation will take about 10 minutes. From the DB display page scroll down to the Resources section. Click the **HeatWave** link. Your completed HeatWave Cluster Information section will look like this:
+4. HeatWave cluster creation will take about 10 minutes. From the DB display page scroll down to the Resources section. Click the **HeatWave** link. Your completed HeatWave Cluster Information section will look like this:
     ![mysql creating cluster](./images/mysql-creating-cluster.png "mysql creating cluster ")
 
 ## Task 2: Load airportdb Data into HeatWave Cluster
