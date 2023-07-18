@@ -70,16 +70,7 @@ In this lab, you will be guided through the following task:
 
     ![mysql heatwave load complete](./images/mysql-heatwave-load-complete.png "mysql heatwave load complete ")
 
-5. Auto provisioning feature highlights:
-    - a. **Load analysis box:** shows the number of tables/columns being loaded
-    - b. **Capacity estimation box:** showis estimated memory and load time
-    - c. **Loading table boxes:** use different thread to load based on the table
-    - d. **Load summary box:** shows the actual load time
-    - ![mysql heatwave load features](./images/mysql-heatwave-load-features.png "mysql heatwave load features complete ")
-
-    - ![mysql heatwave autopilot loadtable](./images/mysql-heatwave-autopilot-loadtable.png "mysql heatwave autopilot loadtable")
-
-6. Verify that the tables are loaded in the HeatWave cluster. Loaded tables have an AVAIL_RPDGSTABSTATE load status.
+5. Verify that the tables are loaded in the HeatWave cluster. Loaded tables have an AVAIL_RPDGSTABSTATE load status.
 
      ```bash
     <copy>USE performance_schema;</copy>
