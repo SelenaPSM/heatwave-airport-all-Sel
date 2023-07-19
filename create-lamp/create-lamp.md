@@ -469,6 +469,54 @@ You will need a compute Instance to connect to your brand new MySQL database.
     Example: http://129.213.167..../mydbchart.php
     ![mydbchart out](./images/mydbchart-out.png "mydbchart out ")
 
+## TASK 8: Create HeatWave ML Web App
+
+1. Go to the development folder
+
+    ```bash
+    <copy>cd /var/www/html</copy>
+    ```
+
+2. Create application folder 
+
+    ```bash
+    <copy>sudo mkdir airportapp</copy>
+    ```
+
+3. Change to application folder 
+
+    ```bash
+    <copy>cd /var/www/html/airportapp</copy>
+    ```
+
+4. Download application code
+
+    ```bash
+    <copy> sudo wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/UfqwN3uKxYZlixYZz6ARjJ2KiZBiTMAheJkNdDpjabz13XhoMDKg1CIZmuSMDTqX/n/idazzjlcjqzj/b/airportdb-bucket-10282022/o/airportapp_automl.zip</copy>
+    ```
+
+5. unzip Application code
+
+    ```bash
+    <copy>sudo unzip airportapp_automl.zip</copy>
+    ```
+
+    ```bash
+    <copy>cd airportapp/airportapp</copy>
+    ```
+
+6. Replace the database IP in config.php file with your heatwave database IP and save the file.
+
+    ```bash
+    <copy>sudo nano config.php</copy>
+    ```
+
+7. Run the application as follows:
+
+    http://computeIP/airportapp/airportapp/eureka_index.php
+
+    ![MDS](./images/airport_web.png "airport-web-php")
+
 **Congratulations!  You have successfully finished the Workshop.**
 
 ## Acknowledgements

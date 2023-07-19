@@ -43,8 +43,8 @@
             "filename": "../../do-lakehouse/do-lakehouse.md"  
           },
           {
-            "title": "Lab 7: Develop HeatWave LAMP APPs",
-            "filename": "../../develop-ml/develop-ml.md"
+            "title": "Lab 7: Build a LAMP application with MySQL HeatWave",
+            "filename": "../../create-lamp/create-lamp.md"
           },  
 
           {
