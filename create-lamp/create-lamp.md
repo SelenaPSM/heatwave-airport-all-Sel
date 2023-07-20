@@ -477,35 +477,23 @@ if ($stmt = $link->prepare($query)) {
     <copy>cd /var/www/html</copy>
     ```
 
-2. Create application folder 
-
-    ```bash
-    <copy>sudo mkdir airportapp</copy>
-    ```
-
-3. Change to application folder 
-
-    ```bash
-    <copy>cd /var/www/html/airportapp</copy>
-    ```
-
-4. Download application code
+2. Download application code
 
     ```bash
     <copy> sudo wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/UfqwN3uKxYZlixYZz6ARjJ2KiZBiTMAheJkNdDpjabz13XhoMDKg1CIZmuSMDTqX/n/idazzjlcjqzj/b/airportdb-bucket-10282022/o/airportapp_automl.zip</copy>
     ```
 
-5. unzip Application code
+3. unzip Application code
 
     ```bash
     <copy>sudo unzip airportapp_automl.zip</copy>
     ```
 
     ```bash
-    <copy>cd airportapp/airportapp</copy>
+    <copy>cd airportapp</copy>
     ```
 
-6. Replace the database IP in config.php file with your heatwave database IP and save the file.
+4. Replace the database IP in config.php file with your heatwave database IP and save the file.
 
     ```bash
     <copy>sudo nano config.php</copy>
