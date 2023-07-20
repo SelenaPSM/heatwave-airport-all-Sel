@@ -46,7 +46,15 @@
             "title": "Lab 7: Build a LAMP application with MySQL HeatWave",
             "filename": "../../create-lamp-advanced/create-lamp-advanced.md"
           },  
+          {
+            "title": "Lab 8: (Bonus) Build a real-time dashboard in Oracle Analytics Cloud with MySQL HeatWave",
+            "filename": "../../do-oac-advanced/do-oac-advanced.md"
+          }, 
 
+          {
+            "title": "Lab 9: (Bonus)  Develop MySQL HeatWave Apps with Oracle APEX",
+            "filename": "../../apex-heatwave/apex-heatwave.md"
+          }, 
           {
               "title": "Need Help?",
               "description": "Solutions to Common Problems and Directions for Receiving Live Help",
