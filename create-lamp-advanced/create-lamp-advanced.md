@@ -19,13 +19,14 @@ In this lab, you will be guided through the following tasks:
 - Test connection to MySQL Database System
 - Install Apache and PHP
 - Create PHP / MYSQL Connect Application
-- Create Google Chart Application
+- Create Lakehouse Google Chart Application
+- Create Application AutoML Application
 
 ### Prerequisites
 
 - An Oracle Trial or Paid Cloud Account
 - Some Experience with MySQL Shell
-- Must Complete Lab 5
+- Must Complete Lab 6
 
 ## Task 1: Create SSH Key on OCI Cloud Shell
 
@@ -401,33 +402,32 @@ You will need a compute Instance to connect to your brand new MySQL database.
 
     ```bash
     <copy><?php
-    require_once "config.php";
-    $query = "select firstname, lastname, count(booking.passenger_id) as count_bookings from passenger, booking
-    where booking.passenger_id = passenger.passenger_id
-    and passenger.lastname = 'Aldrin' or (passenger.firstname = 'Neil' and passenger.lastname = 'Armstrong')
-    and booking.price > 400.00 group by firstname, lastname;";
-    if ($stmt = $link->prepare($query)) {
-    $stmt->execute();
-    $stmt->bind_result($firstname,$lastname,$count_bookings);
-    echo "<table>";
-            echo "<tr>";
-            echo "<th>Firstname</th>";
-            echo "<th>Lastname</th>";
-            echo "<th>Count</th>";
+require_once "config.php";
+$query = "select firstname, lastname, count(booking.passenger_id) as count_bookings from passenger, booking
+where booking.passenger_id = passenger.passenger_id
+and passenger.lastname = 'Aldrin' or (passenger.firstname = 'Neil' and passenger.lastname = 'Armstrong')
+and booking.price > 400.00 group by firstname, lastname;";
+if ($stmt = $link->prepare($query)) {
+   $stmt->execute();
+   $stmt->bind_result($firstname,$lastname,$count_bookings);
+   echo "<table>";
+        echo "<tr>";
+        echo "<th>Firstname</th>";
+        echo "<th>Lastname</th>";
+        echo "<th>Count</th>";
+    echo "</tr>";
+
+    while ($stmt->fetch()) {
+        echo "<tr>";
+           echo "<td>" . $firstname ."</td>";
+           echo "<td>" . $lastname . "</td>";
+           echo "<td>" . $count_bookings . "</td>";
         echo "</tr>";
+     }
 
-        while ($stmt->fetch()) {
-            echo "<tr>";
-            echo "<td>" . $firstname ."</td>";
-            echo "<td>" . $lastname . "</td>";
-            echo "<td>" . $count_bookings . "</td>";
-            echo "</tr>";
-        }
-
-        $stmt->close();
-    }
-    ?>
-
+    $stmt->close();
+}
+?>
     </copy>
     ```
 
@@ -435,7 +435,7 @@ You will need a compute Instance to connect to your brand new MySQL database.
 
     Example: http://129.213.167..../dbtest.php  
 
-## Task 7: Create Google Chart Application
+## Task 7: Create Google Chart Application to display Lakehouse data
 
 1. Go to the development folder
 
@@ -468,6 +468,42 @@ You will need a compute Instance to connect to your brand new MySQL database.
 
     Example: http://129.213.167..../mydbchart.php
     ![mydbchart out](./images/mydbchart-out.png "mydbchart out ")
+
+## TASK 8: Create HeatWave ML Web App
+
+1. Go to the development folder
+
+    ```bash
+    <copy>cd /var/www/html</copy>
+    ```
+
+2. Download application code
+
+    ```bash
+    <copy> sudo wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/UfqwN3uKxYZlixYZz6ARjJ2KiZBiTMAheJkNdDpjabz13XhoMDKg1CIZmuSMDTqX/n/idazzjlcjqzj/b/airportdb-bucket-10282022/o/airportapp_automl.zip</copy>
+    ```
+
+3. unzip Application code
+
+    ```bash
+    <copy>sudo unzip airportapp_automl.zip</copy>
+    ```
+
+    ```bash
+    <copy>cd airportapp</copy>
+    ```
+
+4. Replace the database IP in config.php file with your heatwave database IP and save the file.
+
+    ```bash
+    <copy>sudo nano config.php</copy>
+    ```
+
+7. Run the application as follows:
+
+    http://computeIP/airportapp/airportapp/eureka_index.php
+
+    ![MDS](./images/airport_web.png "airport-web-php")
 
 **Congratulations!  You have successfully finished the Workshop.**
 

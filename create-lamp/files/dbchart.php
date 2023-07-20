@@ -1,5 +1,5 @@
 <?php
- $con = mysqli_connect('localhost','admin','Welcome#123','airportdb');
+ $con = mysqli_connect('30.0...','admin','Welcome#123','airportdb');
 ?>
 <!DOCTYPE html>
 <html lang="en-US">
@@ -83,7 +83,7 @@ function drawChart() {
 
   // Optional; add a title and set the width and height of the chart
   var options = {'title':'Top 8 bookers by lastname', 
-                'width':650, 'height':400};
+                'width':550, 'height':400};
 
   // Display the chart inside the <div> element with id="piechart"
   var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -96,30 +96,30 @@ function drawChart() {
 <div class="centered">
 <?php
 
-$link = mysqli_connect('localhost','admin','Welcome#123','airportdb');
+$link = mysqli_connect('30.0...','admin','Welcome#123','airportdb');
 #require_once "config_2.php";
-$query = "SELECT sastifaction,customer_type, travel_type, count(*) departure_delay
-FROM airportdb.passenger_survey where departure_delay > 120 group by customer_type,travel_type,sastifaction
-order by sastifaction desc,customer_type, travel_type;";
+$query = "SELECT booking_id, firstname,lastname, price FROM passenger, booking
+ WHERE booking.passenger_id = passenger.passenger_id
+ ORDER by booking_id desc LIMIT 10;";
 if ($stmt = $link->prepare($query)) {
    $stmt->execute();
-   $stmt->bind_result($sastifaction,$customer_type, $travel_type,$departure_delay);
-echo "<h2>Customer response based on 120 second Delayed flight</h2>";
+   $stmt->bind_result($booking_id,$firstname,$lastname,$price);
+echo "<h2>10 Latest Booking entries and updates</h2>";
 
    echo "<table>";
     echo "<tr>";
-    echo "<th>sastifaction</th>";
-    echo "<th>customer_type</th>";
-    echo "<th>travel_type</th>";
-    echo "<th>departure_delay</th>";
+    echo "<th>Booking_id</th>";
+    echo "<th>Firstname</th>";
+    echo "<th>Lastname</th>";
+    echo "<th>Price</th>";
 echo "</tr>";
 
 while ($stmt->fetch()) {
     echo "<tr>";
-       echo "<td>" . $sastifaction ."</td>";
-       echo "<td>" . $customer_type ."</td>";
-       echo "<td>" . $travel_type ."</td>";
-       echo "<td>" . $departure_delay ."</td>";
+       echo "<td>" . $booking_id ."</td>";
+       echo "<td>" . $firstname ."</td>";
+       echo "<td>" . $lastname . "</td>";
+       echo "<td>" . $price . "</td>";
     echo "</tr>";
  }
 
@@ -128,43 +128,5 @@ $stmt->close();
 ?>
 </div>
 </div>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
 </body>
 </html>
