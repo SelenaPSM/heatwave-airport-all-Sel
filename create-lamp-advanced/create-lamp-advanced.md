@@ -501,7 +501,7 @@ if ($stmt = $link->prepare($query)) {
 
 7. Run the application as follows:
 
-    http://computeIP/airportapp/airportapp/eureka_index.php
+    http://computeIP/airportapp/eureka_index.php
 
     ![MDS](./images/airport_web.png "airport-web-php")
 

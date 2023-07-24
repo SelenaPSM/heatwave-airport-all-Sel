@@ -24,15 +24,9 @@ In this lab, you will be guided through the following tasks:
 
 ## Task 1: Download survey file to your local machine
 
-1. From Windows Local machine click  this  link to download the sample file to your local machine
+1. From Windows,linuxc, or mac Local machine click  this  link to download the sample file to your local machine
 
     [https://objectstorage.us-ashburn-1.oraclecloud.com/p/JZjT3fuhsUXWBdOPVvLnP0Mx1ApX9Jj5z5iSxge4uS_lBjRqHv2md6IuRu2MUJUp/n/mysqlpm/b/mysql_airport/o/passenger_survey.csv](https://objectstorage.us-ashburn-1.oraclecloud.com/p/JZjT3fuhsUXWBdOPVvLnP0Mx1ApX9Jj5z5iSxge4uS_lBjRqHv2md6IuRu2MUJUp/n/mysqlpm/b/mysql_airport/o/passenger_survey.csv) 
-
-2. From Linux or Mac Enter from terminal
-
-    ```bash
-    <copy>https://objectstorage.us-ashburn-1.oraclecloud.com/p/JZjT3fuhsUXWBdOPVvLnP0Mx1ApX9Jj5z5iSxge4uS_lBjRqHv2md6IuRu2MUJUp/n/mysqlpm/b/mysql_airport/o/passenger_survey.csv</copy>
-    ```
 
 ## Task 2: Create Object Storage bucket
 
@@ -271,7 +265,7 @@ In this lab, you will be guided through the following tasks:
     a. Join the passenger_survey table with other table in the schema
 
     ```bash
-    <copy> SELECT sastifaction,customer_type, travel_type, AVG(departure_delay) departure_delay,count(*) as nb_psgr
+    <copy> SELECT satisfaction,customer_type, travel_type, AVG(departure_delay) departure_delay,count(*) as nb_psgr
     FROM airportdb.passenger_survey
     group by customer_type,travel_type,sastifaction; </copy>
     ```
