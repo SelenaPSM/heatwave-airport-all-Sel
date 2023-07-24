@@ -267,7 +267,7 @@ In this lab, you will be guided through the following tasks:
     ```bash
     <copy> SELECT satisfaction,customer_type, travel_type, AVG(departure_delay) departure_delay,count(*) as nb_psgr
     FROM airportdb.passenger_survey
-    group by customer_type,travel_type,sastifaction; </copy>
+    group by customer_type,travel_type,satisfaction; </copy>
     ```
 
 6. Your output for steps 2 thru 5 should look like this:
