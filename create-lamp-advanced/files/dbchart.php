@@ -98,9 +98,9 @@ function drawChart() {
 
 $link = mysqli_connect('localhost','admin','Welcome#123','airportdb');
 #require_once "config_2.php";
-$query = "SELECT sastifaction,customer_type, travel_type, count(*) departure_delay
-FROM airportdb.passenger_survey where departure_delay > 120 group by customer_type,travel_type,sastifaction
-order by sastifaction desc,customer_type, travel_type;";
+$query = "SELECT satisfaction,customer_type, travel_type, count(*) departure_delay
+FROM airportdb.passenger_survey where departure_delay > 120 group by customer_type,travel_type,satisfaction
+order by satisfaction desc,customer_type, travel_type;";
 if ($stmt = $link->prepare($query)) {
    $stmt->execute();
    $stmt->bind_result($sastifaction,$customer_type, $travel_type,$departure_delay);
