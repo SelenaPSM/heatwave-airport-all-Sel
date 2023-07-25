@@ -177,9 +177,9 @@ In this lab, you will be guided through the following tasks:
 16. Add chart to OAC using the following query
 
     ```bash
-    <copy>SELECT sastifaction,customer_type, travel_type, AVG(departure_delay) departure_delay,count(*) as nb_psgr
+    <copy>SELECT satisfaction,customer_type, travel_type, AVG(departure_delay) departure_delay,count(*) as nb_psgr
     FROM airportdb.passenger_survey
-    group by customer_type,travel_type,sastifaction;</copy>
+    group by customer_type,travel_type,satisfaction;</copy>
     ```
 
 You may now **proceed to the next lab**
