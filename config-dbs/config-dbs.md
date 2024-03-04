@@ -3,7 +3,7 @@
 
 ## Introduction
 
-In this lab, you will learn to manage configurations in MySQL DB System.
+In this lab, you will learn to manage configurations in a MySQL DB System.
 
 _Estimated Time:_ 15 minutes
 
@@ -21,6 +21,7 @@ In this lab, you will be guided through the following tasks:
 
 - An Oracle Trial or Paid Cloud Account
 - Completed Task 3
+
 
 ## Task 1: Create a MySQL Configuration
 
