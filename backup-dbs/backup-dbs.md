@@ -3,7 +3,7 @@
 
 ## Introduction
 
-In this lab, you will learn to manage configurations in a MySQL DB System.
+In this lab, you will learn to manage backups in a MySQL DB System.
 
 _Estimated Time:_ 15 minutes
 
@@ -12,10 +12,11 @@ _Estimated Time:_ 15 minutes
 
 In this lab, you will be guided through the following tasks:
 
-- Create a MySQL Configuration 
-- Copy a MySQL Configuration, change variables and compare them
-- Update the MySQL Configuration of a DB system
-- Delete unused MySQL Confiigurations
+- Create a Manual Backup 
+- Edit the Backup Plan of a DB System
+- Restore to a new DB System from a Manual Backup
+- Restore to a new DB System from a Point-in-Time
+- Delete unused MySQL Backups
 
 ### Prerequisites
 
