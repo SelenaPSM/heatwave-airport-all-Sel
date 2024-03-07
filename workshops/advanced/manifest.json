@@ -36,7 +36,10 @@
           "title": "Lab 5: Configure MySQL DB System",
           "filename": "../../config-dbs/config-dbs.md"
         },
-
+        {
+          "title": "Lab 6: Backup MySQL DB System",
+          "filename": "../../backup-dbs/backup-dbs.md"
+        },
         {
           "title": "Lab 6: Do HeatWave Machine Learning",
           "filename": "../../do-heatwave-ml/do-heatwave-ml.md"

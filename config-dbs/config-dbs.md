@@ -143,7 +143,7 @@ In this lab, you will be guided through the following tasks:
 1. Click **Navigation Menu**, click  **Databases**, then **DB Systems**  
     ![menu databases](./images/menu-dbsystems.png "menu databases dbsystem")
 
-2. Click on **EATWAVE-DB** to view the deatils.  
+2. Click on **HEATWAVE-DB** to view the deatils.  
     ![databases list](./images/list-dbsystem.png "list of dbsystem")
 
 3. Click the **Edit** button to edit the DB System
