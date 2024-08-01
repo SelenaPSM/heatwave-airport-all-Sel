@@ -1,221 +1,226 @@
-# Crea un DBSystem HeatWave
+# Create MySQL HeatWave Database System
 
 ![mysql heatwave](./images/mysql-heatwave-logo.jpg "mysql heatwave")
 
-## Introducción
+## Introduction
 
-En este laboratorio, crearás y configurarás un DB System HeatWave.
+In this lab, you will create and configure a MySQL DB System.
 
+_Estimated Time:_ 15 minutes
 
-_Tiempo estimado:_ 15 minutos
+### Objectives
 
-### Objetivos
+In this lab, you will be guided through the following tasks:
 
-En este laboratorio, serás guiado a través de las siguientes tareas:
+- Create Virtual Cloud Network
+- Create MySQL HeatWave (DB System) Instance
 
-- Creación de una Virtual Cloud Network (VCN)
-- Creación de una instancia de HeatWave (DB System)
+### Prerequisites
 
-### Prerequisitos
+- An Oracle Trial or Paid Cloud Account
+- Some Experience with MySQL Shell
 
-- Una cuenta de prueba o de pago de Oracle Cloud Infraestructure
+## Task 1: Create Virtual Cloud Network
 
-## Tarea 1: Creación de Virtual Cloud Network (VCN)
+1. You should be signed in to Oracle Cloud!
 
-1. Debe conectarse a su cuenta de Oracle Cloud Infraestructure
-
-    Haga Click en el **Menu Principal**,
+    Click **Navigation Menu**,
 
     ![OCI Console Home Page](./images/homepage.png " home page")
 
-2. Haga click en **Networking**, después en **Virtual Cloud Networks**  
+2. Click  **Networking**, then **Virtual Cloud Networks**  
     ![menu vcn](./images/home-menu-networking-vcn.png "home menu networking vcn ")
 
-    Selecciona el compartment root o raíz
+    Select the root compartment
     ![vcn wizard Select Root compartment](./images/vcn-menu-compartmen-root.png "vcn menu compartmen root ")
 
-3. Haga click en **Start VCN Wizard**
+3. Select the Click **Start VCN Wizard**
     ![vcn start wizard](./images/vcn-wizard-menu.png "vcn wizard menu")
 
-4. Seleccione 'Create VCN with Internet Connectivity'
+4. Select 'Create VCN with Internet Connectivity'
 
-    Haga click en 'Start VCN Wizard'
+    Click 'Start VCN Wizard'
     ![vcn wizard start create](./images/vcn-wizard-start.png "start vcn wizard start")
 
-5. Creación de una VCN con conexión a Internet
+5. Create a VCN with Internet Connectivity
 
-    Complete los siguientes campos:
+    On Basic Information, complete the following fields:
 
-    Nombre de la VCN:
+    VCN Name:
 
     ```bash
     <copy>HEATWAVE-VCN</copy>
     ```
 
-    Compartimento: Seleccione  **root**
+    Compartment: Select  **(root)**
 
-    Su pantalla debe verse de la siguente forma:
+    Your screen should look similar to the following
     ![select compartment](./images/vcn-wizard-compartment.png "select compartment")
 
-6. Haga click en 'Next' en la parte baja de la pantalla
+6. Click 'Next' at the bottom of the screen
 
-7. Revisión de la VCN, subredes y gateways 
+7. Review Oracle Virtual Cloud Network (VCN), Subnets, and Gateways
 
-    Haga click en 'Create' para crear una VCN
+    Click 'Create' to create the VCN
     ![create vcn](./images/vcn-wizard-create.png "create vcn")
 
-8. Cuando la creación de la VCN se complete, haga click en View 'Virtual Cloud Network' para acceder a la VCN recién creada
+8. When the Virtual Cloud Network creation completes, click 'View Virtual Cloud Network' to display the created VCN
     ![vcn creation completing](./images/vcn-wizard-view.png "vcn creation completing")
 
-## Tarea 2: Configure listas de seguridad para permitir conexiónes hacia MySQL
+## Task 2: Configure security list to allow MySQL incoming connections
 
-1. En la página de HEATWAVE-VCN, debajo de 'Subnets in root Compartment', haga click en'**Private Subnet-HEATWAVE-VCN**'
+1. On HEATWAVE-VCN page under 'Subnets in (root) Compartment', click  '**Private Subnet-HEATWAVE-VCN**'
      ![vcn subnet](./images/vcn-details-subnet.png "vcn details subnet")
 
-2. Haga click en '**Security List for Private Subnet-HEATWAVE-VCN**'
+2. On Private Subnet-HEATWAVE-VCN page under 'Security Lists',  click  '**Security List for Private Subnet-HEATWAVE-VCN**'
     ![vcn private security list](./images/vcn-private-security-list.png "vcn private security list")
 
-3. En la sección de 'Ingress Rules', haga click en '**Add Ingress Rules**'
+3. On Security List for Private Subnet-HEATWAVE-VCN page under 'Ingress Rules', click '**Add Ingress Rules**'
     ![vcn private subnet](./images/vcn-private-security-list-ingress.png "vcn private security list ingress")
 
-4. En la nueva pantalla, complete los campos:
+4. On Add Ingress Rules page under Ingress Rule 1
 
-    a. Agregue una Regla de entrada con el CIDR de origen
+    a. Add an Ingress Rule with Source CIDR
 
     ```bash
     <copy>0.0.0.0/0</copy>
     ```
 
-    b. Rango de puertos de destino
+    b. Destination Port Range
 
     ```bash
     <copy>3306,33060</copy>
      ```
 
-    c. Descripción
+    c. Description
 
     ```bash
-    <copy>Puerto de Acceso MySQL</copy>
+    <copy>MySQL Port Access</copy>
     ```
 
-    d. Haga click en 'Add Ingress Rule'
+    d. Click 'Add Ingress Rule'
     ![add ingres rule](./images/vcn-private-security-list-ingress-rules-mysql.png "vcn private security list ingress rukes mysql")
 
-5. En la lista de seguridad de la página Subred privada-HEATWAVE-VCN, las nuevas reglas de entrada se mostrarán en la lista Reglas de entrada
+5. On Security List for Private Subnet-HEATWAVE-VCN page, the new Ingress Rules will be shown under the Ingress Rules List
     ![show ingres rule](./images/vcn-private-security-list-ingress-display.png "vcn private security list ingress display")
 
-## Tarea 3: Configure la lista de seguridad para permitir conexiónes HTTP
+## Task 3: Configure security list to allow HTTP incoming connections
 
-1. Haga click en el Menu Principal > Networking > Virtual Cloud Networks
+1. Navigation Menu > Networking > Virtual Cloud Networks
 
-2. Seleccione HEATWAVE-VCN
+2. Open HEATWAVE-VCN
 
-3. Haga click en subnet-HEATWAVE-VCN
+3. Click  public subnet-HEATWAVE-VCN
 
-4. Haga click en 'Default Security List for HEATWAVE-VCN'
+4. Click Default Security List for HEATWAVE-VCN
 
-5. Haga click en 'Add Ingress Rules' 
+5. Click Add Ingress Rules page under Ingress Rule
 
-    Agregue una Regla de entrada con el CIDR de origen:
+    Add an Ingress Rule with Source CIDR
 
     ```bash
     <copy>0.0.0.0/0</copy>
     ```
 
-    Rango de puertos de destino:
+    Destination Port Range
 
     ```bash
     <copy>80,443</copy>
     ```
 
-    Descripción:
+    Description
 
     ```bash
     <copy>Allow HTTP connections</copy>
     ```
 
-6. Haga click 'Add Ingress Rule'
+6. Click 'Add Ingress Rule'
 
     ![Add HTTP Ingress Rule](./images/vcn-ttp-add-ingress.png "Add HTTP Ingress Rule")
 
-7. En la lista de seguridad, las nuevas reglas de entrada se mostrarán en la lista de reglas de entrada
+7. On Security List for Default Security List for HEATWAVE-VCN page, the new Ingress Rules will be shown under the Ingress Rules List
 
     ![View VCN Completed HTTP Ingress rules](./images/vcn-ttp-ingress-completed.png "View VCN Completed HTTP Ingress rules")
 
-## Tare 4: Crea una instancia de HeatWave (DBSystem)
+## Task 4: Create MySQL Database for HeatWave (DB System) instance
 
-1. Haga click en el Menu Principal > Databases > DBSystems
+1. Click on Navigation Menu
+         Databases
+         MySQL
     ![home menu mysq](./images/home-menu-database-mysql.png "home menu mysql")
 
-2. Haga click en 'Create DB System'
+2. Click 'Create DB System'
     ![mysql create button](./images/mysql-menu.png " mysql create button")
 
-3. Complete los campos en cada sección
+3. Create MySQL DB System dialog by completing the fields in each section
 
-    - Información del DB System 
-    - Configuración del DB system
-    - Cree las credenciales de administrador
-    - Configure la red
-    - Configure el placement
-    - Configure el hardware
-    - Configure los Backups
-    - Configure opciones avanzadas
-4. Seleccione **Development or Testing**
+    - Provide DB System information
+    - Setup the DB system
+    - Create Administrator credentials
+    - Configure Networking
+    - Configure placement
+    - Configure hardware
+    - Exclude Backups
+    - Set up Advanced Options
+
+4. For DB System Option Select **Development or Testing**
 
     ![heatwave db option](./images/mysql-create-option-develpment.png "heatwave db option")
 
-5. Provea información básica para el DB System:
+5. Provide basic information for the DB System:
 
-    a. Seleccione el comaprtimento **root**
+    a. Select Compartment **(root)**
 
-    b. Ingrese el nombre
+    b. Enter Name
 
     ```bash
     <copy>HEATWAVE-DB</copy>
     ```
 
-    c. Ingrese una descripción (opcional)
+    c. Enter Description
 
     ```bash
     <copy>MySQL HeatWave Database Instance</copy>
     ```
 
-    d. Seleccione **Standalone** 
+    d. Select **Standalone** and enable **Configure MySQL HeatWave**
     ![heatwave db info setup](./images/mysql-create-info-setup.png "heatwave db info setup ")
 
-6. Cree las credenciales de adminstrador
+6. Create Administrator Credentials
 
-    Ingrese el usuario **Username** (escriba este usuario en un bloc de notas para más tarde)
+    **Enter Username** (write username to notepad for later use)
 
-    Ingrese una contraseña **Enter Password** (escriba este usuario en un bloc de notas para más tarde)
+    **Enter Password** (write password to notepad for later use)
 
-    Confrme la contraseña **Confirm Password** 
+    **Confirm Password** (value should match password for later use)
 
-    ![heatwave db admin](./images/mysql-create-admin.png "heatwave db admin")
+    ![heatwave db admin](./images/mysql-create-admin.png "heatwave db admin ")
 
-7. En la confguración de red, mantenga los valores por defecto
+7. On Configure networking, keep the default values
 
     a. Virtual Cloud Network: **HEATWAVE-VCN**
 
     b. Subnet: **Private Subnet-HEATWAVE-VCN (Regional)**
 
-    c. En 'Configure placement', no habilte la opción 'Choose a Fault Domain' 
+    c. On Configure placement under 'Availability Domain'
+
+    Select AD-1  ...  Do not check 'Choose a Fault Domain' for this DB System.
 
     ![heatwave db network ad](./images/mysql-create-network-ad.png "heatwave db network ad ")
 
-8. Configuración de hardware
-    - a. Haga click en el botón de **Change shape** y seleccione el shape **MySQL.32**.
-    - b. Para el tamaño de almacenamiento (GB) configure el valor a **1024**
+8. On Configure hardware
+    - a. Click the **Change shape** button to select the **MySQL.HeatWave.VM.Standard** shape.
+    - b. For Data Storage Size (GB) Set value to:  **1024**
 
     ![heatwave db  hardware](./images/mysql-create-db-hardware.png "heatwave db hardware ")
 
-9. En la configuración de backups, deshabilite la opción de 'Enable Automatic Backup'
+9. On Configure Backups, disable 'Enable Automatic Backup'
 
     ![heatwave db  backup](./images/mysql-create-backup.png " heatwave db  backup")
 
-10. Haga click en 'Show Advanced Options'
+10. Click on Show Advanced Options
 
-11. De cliick en la pestaña de 'Networking', en el campo 'Hostname' ingrese: 
+11. Go to the Networking tab, in the Hostname field enter (same as DB System Name):
 
     ```bash
         <copy>HEATWAVE-DB</copy> 
@@ -223,32 +228,28 @@ En este laboratorio, serás guiado a través de las siguientes tareas:
 
     ![heatwave db advanced](./images/mysql-create-advanced.png "heatwave db advanced ")
 
-12. Verifique la página **Create MySQL DB System**  
+12. Review **Create MySQL DB System**  Screen
 
     ![heatwave db create](./images/mysql-create.png "heatwave db create ")
   
 
-    Haga click en el botón '**Create**'
+    Click the '**Create**' button
 
-13. El nuevo DBSystem estará listo para utilizarse después de algunos minutos.
+13. The New MySQL DB System will be ready to use after a few minutes
 
-    El estado de la instancia se mostrará 'Creating' durante la creación
+    The state will be shown as 'Creating' during the creation
     ![show creeation state](./images/mysql-create-in-progress.png "show creeation state")
 
-14. Una vez que el estado cambie a 'Active' el DBSystem estará listo para su uso 
+14. The state 'Active' indicates that the DB System is ready for use
 
-    En la página del DBSystem HEATWAVE-HW, haga click en la pestaña 'Connections'(Private IP Address)
-
-    ![heatwave endpoint](./images/mysql-detail-active.png "heatwave endpoint")
-
-15. Identifique la IP privada de su DBSystem
+    On HEATWAVE-HW Page, check the MySQL Endpoint (Private IP Address)
 
     ![heatwave endpoint](./images/mysql-detail-active.png "heatwave endpoint")
 
 You may now **proceed to the next lab**
 
-## Créditos
+## Acknowledgements
 
-- **Autor(es)** - Perside Foster, MySQL Principal Solution Engineering; Selena Sánchez, MySQL Solution Engineering
-- **Colaboradores** - 
-- **Última actualización** - Selena Sánchez, MySQL Solution Engineering, Agosto 2024
+- **Author** - Perside Foster, MySQL Principal Solution Engineering
+- **Contributors** - Mandy Pang, MySQL Principal Product Manager,  Nick Mader, MySQL Global Channel Enablement & Strategy Manager
+- **Last Updated By/Date** - Perside Foster, MySQL Solution Engineering, July 2023
